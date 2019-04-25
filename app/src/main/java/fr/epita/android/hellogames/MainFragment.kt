@@ -62,43 +62,59 @@ class MainFragment : Fragment() {
             override fun onResponse(call: Call<List<gameEl>>, response: Response<List<gameEl>>) {
                 if (response.code() == 200){
                     val responsedata = response.body()
-                    if (responsedata != null && context != null){
+                    if (responsedata != null && activity != null){
                         val els = responsedata.shuffled()
-                        Glide.with(context!!)
-                            .load(els[0].picture)
-                            .into(imageView)
-                        Glide.with(context!!)
-                            .load(els[1].picture)
-                            .into(imageView2)
-                        Glide.with(context!!)
-                            .load(els[2].picture)
-                            .into(imageView3)
-                        Glide.with(context!!)
-                            .load(els[3].picture)
-                            .into(imageView4)
+                        activity?.let {
+                            Glide.with(it)
+                                .load(els[0].picture)
+                                .into(imageView)
+                        }
+                        activity?.let {
+                            Glide.with(it)
+                                .load(els[1].picture)
+                                .into(imageView2)
+                        }
+                        activity?.let {
+                            Glide.with(it)
+                                .load(els[2].picture)
+                                .into(imageView3)
+                        }
+                        activity?.let {
+                            Glide.with(it)
+                                .load(els[3].picture)
+                                .into(imageView4)
+                        }
 
                         imageView.setOnClickListener {
-                            val explicitIntent = Intent(context, SecondActivity::class.java)
-                            explicitIntent.putExtra("intId", els[0].id)
-                            startActivity(explicitIntent)
+                            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                            val secFrag = SecondaryFragment(els[0].id)
+                            fragmentTransaction.replace(R.id.main_container, secFrag)
+                            fragmentTransaction.addToBackStack(null)
+                            fragmentTransaction.commit()
                         }
 
                         imageView2.setOnClickListener {
-                            val explicitIntent = Intent(context, SecondActivity::class.java)
-                            explicitIntent.putExtra("intId", els[1].id)
-                            startActivity(explicitIntent)
+                            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                            val secFrag = SecondaryFragment(els[1].id)
+                            fragmentTransaction.replace(R.id.main_container, secFrag)
+                            fragmentTransaction.addToBackStack(null)
+                            fragmentTransaction.commit()
                         }
 
                         imageView3.setOnClickListener {
-                            val explicitIntent = Intent(context, SecondActivity::class.java)
-                            explicitIntent.putExtra("intId", els[2].id)
-                            startActivity(explicitIntent)
+                            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                            val secFrag = SecondaryFragment(els[2].id)
+                            fragmentTransaction.replace(R.id.main_container, secFrag)
+                            fragmentTransaction.addToBackStack(null)
+                            fragmentTransaction.commit()
                         }
 
                         imageView4.setOnClickListener {
-                            val explicitIntent = Intent(context, SecondActivity::class.java)
-                            explicitIntent.putExtra("intId", els[3].id)
-                            startActivity(explicitIntent)
+                            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                            val secFrag = SecondaryFragment(els[3].id)
+                            fragmentTransaction.replace(R.id.main_container, secFrag)
+                            fragmentTransaction.addToBackStack(null)
+                            fragmentTransaction.commit()
                         }
                     }
 

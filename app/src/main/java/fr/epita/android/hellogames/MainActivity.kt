@@ -8,7 +8,8 @@ import retrofit2.http.Query
 
 
 
-class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionListener,
+    SecondaryFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
