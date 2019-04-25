@@ -1,5 +1,7 @@
 package fr.epita.android.hellogames
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,12 +14,16 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
         val baseUrl = "https://androidlessonsapi.herokuapp.com/api/"
         val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
         val retrofit = Retrofit.Builder()
@@ -48,20 +54,43 @@ class MainActivity : AppCompatActivity() {
                         Glide.with(applicationContext)
                             .load(els[3].picture)
                             .into(imageView4)
-                        Log.d("test", els[0].picture + els[1].picture + els[2].picture)
+
+                        imageView.setOnClickListener {
+                            val explicitIntent = Intent(applicationContext, SecondActivity::class.java)
+                            explicitIntent.putExtra("intId", els[0].id)
+                            startActivity(explicitIntent)
+                        }
+
+                        imageView2.setOnClickListener {
+                            val explicitIntent = Intent(applicationContext, SecondActivity::class.java)
+                            explicitIntent.putExtra("intId", els[1].id)
+                            startActivity(explicitIntent)
+                        }
+
+                        imageView3.setOnClickListener {
+                            val explicitIntent = Intent(applicationContext, SecondActivity::class.java)
+                            explicitIntent.putExtra("intId", els[2].id)
+                            startActivity(explicitIntent)
+                        }
+
+                        imageView4.setOnClickListener {
+                            val explicitIntent = Intent(applicationContext, SecondActivity::class.java)
+                            explicitIntent.putExtra("intId", els[3].id)
+                            startActivity(explicitIntent)
+                        }
                     }
 
                 }
             }
         }
         service.gameList().enqueue(wsCallback)
-
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
     }
     
     interface WebServiceInterface {
         @GET("game/list")
         fun gameList() : Call<List<gameEl>>
+
+        @GET("/game/details")
+        fun gameDetails(@Query("game_id") game_id : Int): Call<List<gameDetails>>
     }
 }
