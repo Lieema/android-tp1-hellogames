@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val baseUrl = "https://androidlessonsapi.herokuapp.com/api/"
+        val baseUrl = "https://androidlessonsapi.herokuapp.com/"
         val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -87,10 +87,10 @@ class MainActivity : AppCompatActivity() {
     }
     
     interface WebServiceInterface {
-        @GET("game/list")
+        @GET("/api/game/list")
         fun gameList() : Call<List<gameEl>>
 
-        @GET("/game/details")
-        fun gameDetails(@Query("game_id") game_id : Int): Call<List<gameDetails>>
+        @GET("/api/game/details")
+        fun gameDetails(@Query("game_id") game_id : Int): Call<gameDetails>
     }
 }
